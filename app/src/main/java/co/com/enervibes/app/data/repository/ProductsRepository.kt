@@ -87,7 +87,14 @@ class ProductsRepository {
         productId: Int, branchId: Int, quantity: Double, minStockLevel: Double?
     ): Result<Unit> {
         return try {
-            val response = service.setInitialStock(productId, branchId, quantity, minStockLevel)
+            val response = service.setInitialStock(
+                mapOf(
+                    "product_id" to productId,
+                    "branch_id" to branchId,
+                    "quantity" to quantity,
+                    "min_stock_level" to minStockLevel
+                )
+            )
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {

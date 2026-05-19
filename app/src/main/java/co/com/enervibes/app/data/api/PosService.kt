@@ -5,17 +5,17 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface PosService {
-    @GET("pos/api/search")
+    @GET("api/pos/search")
     suspend fun searchProducts(
         @Query("q") query: String,
         @Query("branch_id") branchId: Int
     ): Response<ApiResponse<List<ProductModel>>>
 
-    @GET("pos/api/top-products")
+    @GET("api/pos/top-products")
     suspend fun getTopProducts(
         @Query("branch_id") branchId: Int
     ): Response<ApiResponse<List<ProductModel>>>
 
-    @POST("pos/api/sale")
+    @POST("api/pos/sale")
     suspend fun processSale(@Body sale: SaleRequest): Response<ApiResponse<TransactionModel>>
 }

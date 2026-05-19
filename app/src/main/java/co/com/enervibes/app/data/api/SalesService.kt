@@ -6,28 +6,28 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface SalesService {
-    @GET("sales")
+    @GET("api/sales")
     suspend fun getSales(
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 20,
-        @Query("date_from") dateFrom: String? = null,
-        @Query("date_to") dateTo: String? = null,
-        @Query("branch_id") branchId: Int? = null,
-        @Query("reference") reference: String? = null
+        @Query("startDate") dateFrom: String? = null,
+        @Query("endDate") dateTo: String? = null,
+        @Query("allBranches") allBranches: Boolean? = null,
+        @Query("search") search: String? = null
     ): Response<ApiResponse<List<TransactionModel>>>
 
-    @GET("sales/{id}")
+    @GET("api/sales/{id}")
     suspend fun getSaleDetail(@Path("id") id: Int): Response<TransactionModel>
 
-    @PUT("sales/{id}")
+    @PUT("api/sales/{id}")
     suspend fun updateSale(
         @Path("id") id: Int,
         @Body body: Map<String, Any?>
     ): Response<ApiResponse<TransactionModel>>
 
-    @POST("sales/{id}/mark-paid")
+    @POST("api/sales/{id}/mark-paid")
     suspend fun markAsPaid(@Path("id") id: Int): Response<ApiResponse<TransactionModel>>
 
-    @DELETE("sales/{id}")
+    @DELETE("api/sales/{id}")
     suspend fun deleteSale(@Path("id") id: Int): Response<ApiResponse<Unit>>
 }

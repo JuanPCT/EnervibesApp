@@ -7,16 +7,16 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface TercerosService {
-    @GET("terceros/api/search")
+    @GET("api/terceros/search")
     suspend fun searchClientes(@Query("q") query: String): Response<ApiResponse<List<TerceroModel>>>
 
-    @POST("terceros/api/quick-create")
+    @POST("api/terceros/quick-create")
     suspend fun quickCreateCliente(@Body body: TerceroCreateRequest): Response<ApiResponse<TerceroModel>>
 
-    @GET("terceros/api/default")
+    @GET("api/terceros/default")
     suspend fun getDefaultCliente(): Response<ApiResponse<TerceroModel>>
 
-    @GET("terceros")
+    @GET("api/terceros")
     suspend fun getTerceros(
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 20,
@@ -24,32 +24,15 @@ interface TercerosService {
         @Query("search") search: String? = null
     ): Response<ApiResponse<List<TerceroModel>>>
 
-    @FormUrlEncoded
-    @POST("terceros/create")
-    suspend fun createTercero(
-        @Field("identificacion") identificacion: String?,
-        @Field("nombre") nombre: String,
-        @Field("tipo") tipo: String,
-        @Field("telefono") telefono: String?,
-        @Field("email") email: String?,
-        @Field("direccion") direccion: String?,
-        @Field("notas") notas: String?
-    ): Response<ApiResponse<TerceroModel>>
+    @POST("api/terceros")
+    suspend fun createTercero(@Body body: TerceroCreateRequest): Response<ApiResponse<TerceroModel>>
 
-    @FormUrlEncoded
-    @POST("terceros/{id}/edit")
+    @PUT("api/terceros/{id}")
     suspend fun updateTercero(
         @Path("id") id: Int,
-        @Field("identificacion") identificacion: String?,
-        @Field("nombre") nombre: String,
-        @Field("tipo") tipo: String?,
-        @Field("telefono") telefono: String?,
-        @Field("email") email: String?,
-        @Field("direccion") direccion: String?,
-        @Field("notas") notas: String?
+        @Body body: TerceroCreateRequest
     ): Response<ApiResponse<TerceroModel>>
 
-    @FormUrlEncoded
-    @POST("terceros/{id}/delete")
+    @DELETE("api/terceros/{id}")
     suspend fun deleteTercero(@Path("id") id: Int): Response<ApiResponse<Unit>>
 }

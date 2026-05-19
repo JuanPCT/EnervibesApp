@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 data class LoginUiState(
     val email: String = "",
     val password: String = "",
-    val rememberMe: Boolean = false,
+    val remember: Boolean = false,
     val isLoading: Boolean = false,
     val error: String? = null,
     val isLoggedIn: Boolean = false
@@ -24,7 +24,7 @@ class LoginViewModel(tokenManager: TokenManager) : ViewModel() {
 
     fun onEmailChange(value: String) { _uiState.update { it.copy(email = value, error = null) } }
     fun onPasswordChange(value: String) { _uiState.update { it.copy(password = value, error = null) } }
-    fun onRememberMeChange(value: Boolean) { _uiState.update { it.copy(rememberMe = value) } }
+    fun onRememberChange(value: Boolean) { _uiState.update { it.copy(remember = value) } }
 
     fun login() {
         val state = _uiState.value
@@ -34,7 +34,7 @@ class LoginViewModel(tokenManager: TokenManager) : ViewModel() {
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            val result = repository.login(state.email.trim(), state.password, state.rememberMe)
+            val result = repository.login(state.email.trim(), state.password, state.remember)
             result.fold(
                 onSuccess = {
                     _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }

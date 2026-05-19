@@ -8,9 +8,9 @@ class AuthRepository(private val tokenManager: TokenManager) {
 
     private val service get() = ServiceLocator.authService
 
-    suspend fun login(email: String, password: String, rememberMe: Boolean): Result<UserModel> {
+    suspend fun login(email: String, password: String, remember: Boolean): Result<UserModel> {
         return try {
-            val response = service.login(LoginRequest(email, password, rememberMe))
+            val response = service.login(LoginRequest(email, password, remember))
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body?.token != null && body.user != null) {

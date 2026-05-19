@@ -5,17 +5,17 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ReportsService {
-    @GET("reports/sales-by-product")
+    @GET("api/reports/sales-by-product")
     suspend fun getSalesByProduct(
-        @Query("date_from") dateFrom: String? = null,
-        @Query("date_to") dateTo: String? = null,
-        @Query("branch_id") branchId: Int? = null
+        @Query("startDate") dateFrom: String? = null,
+        @Query("endDate") dateTo: String? = null,
+        @Query("allBranches") allBranches: Boolean? = null
     ): Response<ApiResponse<List<Map<String, Any?>>>>
 
-    @GET("reports/sales-by-employee")
+    @GET("api/reports/sales-by-employee")
     suspend fun getSalesByEmployee(
-        @Query("date_from") dateFrom: String? = null,
-        @Query("date_to") dateTo: String? = null,
-        @Query("branch_id") branchId: Int? = null
+        @Query("startDate") dateFrom: String? = null,
+        @Query("endDate") dateTo: String? = null,
+        @Query("allBranches") allBranches: Boolean? = null
     ): Response<ApiResponse<List<Map<String, Any?>>>>
 }

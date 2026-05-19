@@ -7,18 +7,18 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ProductsService {
-    @GET("products")
+    @GET("api/products")
     suspend fun getProducts(
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 20,
-        @Query("search") search: String? = null,
-        @Query("category_id") categoryId: Int? = null,
-        @Query("branch_id") branchId: Int? = null,
+        @Query("name") search: String? = null,
+        @Query("category") categoryId: Int? = null,
+        @Query("branch") branchId: Int? = null,
         @Query("low_stock") lowStock: Boolean? = null
     ): Response<ApiResponse<List<ProductModel>>>
 
     @Multipart
-    @POST("products/create")
+    @POST("api/products")
     suspend fun createProduct(
         @Part("name") name: RequestBody,
         @Part("price") price: RequestBody,
@@ -37,9 +37,9 @@ interface ProductsService {
     ): Response<ApiResponse<ProductModel>>
 
     @Multipart
-    @POST("products/update")
+    @PUT("api/products/{id}")
     suspend fun updateProduct(
-        @Part("id") id: RequestBody,
+        @Path("id") id: Int,
         @Part("name") name: RequestBody,
         @Part("price") price: RequestBody,
         @Part("cost") cost: RequestBody,
@@ -56,19 +56,11 @@ interface ProductsService {
         @Part image: MultipartBody.Part?
     ): Response<ApiResponse<ProductModel>>
 
-    @FormUrlEncoded
-    @POST("products/delete")
-    suspend fun deleteProduct(
-        @Field("id") id: Int,
-        @Field("_method") method: String = "DELETE"
-    ): Response<ApiResponse<Unit>>
+    @DELETE("api/products/{id}")
+    suspend fun deleteProduct(@Path("id") id: Int): Response<ApiResponse<Unit>>
 
-    @FormUrlEncoded
-    @POST("products/set-initial-stock")
+    @POST("api/products/set-initial-stock")
     suspend fun setInitialStock(
-        @Field("product_id") productId: Int,
-        @Field("branch_id") branchId: Int,
-        @Field("quantity") quantity: Double,
-        @Field("min_stock_level") minStockLevel: Double? = null
+        @Body body: Map<String, Any?>
     ): Response<ApiResponse<Unit>>
 }

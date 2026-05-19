@@ -181,8 +181,8 @@ fun LoginScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Checkbox(
-                            checked = state.rememberMe,
-                            onCheckedChange = viewModel::onRememberMeChange,
+                            checked = state.remember,
+                            onCheckedChange = viewModel::onRememberChange,
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Indigo500,
                                 uncheckedColor = Slate400

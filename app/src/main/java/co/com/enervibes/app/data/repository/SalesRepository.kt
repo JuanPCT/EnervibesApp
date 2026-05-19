@@ -16,8 +16,7 @@ class SalesRepository(private val tokenManager: TokenManager) {
         dateTo: String? = null
     ): Result<Pair<List<TransactionModel>, Int>> {
         return try {
-            val branchId = getBranchId()
-            val response = service.getSales(page, limit, dateFrom, dateTo, branchId)
+            val response = service.getSales(page, limit, dateFrom, dateTo)
             if (response.isSuccessful) {
                 val body = response.body()
                 Result.success(Pair(body?.data ?: emptyList(), body?.total ?: 0))

@@ -5,15 +5,18 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface AuthService {
-    @POST("auth/login")
+    @POST("api/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @GET("auth/logout")
+    @GET("api/auth/me")
+    suspend fun me(): Response<LoginResponse>
+
+    @GET("api/auth/logout")
     suspend fun logout(): Response<ApiResponse<Unit>>
 
-    @GET("auth/branches")
+    @GET("api/auth/branches")
     suspend fun getBranches(): Response<ApiResponse<List<BranchModel>>>
 
-    @POST("auth/change-branch")
+    @POST("api/auth/change-branch")
     suspend fun changeBranch(@Body body: Map<String, Int>): Response<ApiResponse<UserModel>>
 }

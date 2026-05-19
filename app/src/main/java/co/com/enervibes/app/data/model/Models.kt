@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class LoginRequest(
     val email: String,
     val password: String,
-    @SerializedName("remember_me") val rememberMe: Boolean = false
+    val remember: Boolean = false
 )
 
 data class LoginResponse(
